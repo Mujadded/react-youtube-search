@@ -21,10 +21,16 @@ class App extends Component {
 
     videoSearch(term) {
         YTSearch({ key: API_KEY, term: term }, videos => {
-            this.setState({ 
-                videos: videos,
-                selectedVideo: videos[0] 
-            });
+            if (!this.state.selectedVideo){
+                this.setState({ 
+                    videos: videos,
+                    selectedVideo: videos[0] 
+                });
+            }
+            else {
+                this.setState({ videos: videos });
+            }
+
         });
     }
 
