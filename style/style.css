@@ -40,7 +40,9 @@ div.addQueue {
   font-size: 13px;
   font-style: italic;
 }
-
+.video-buttons .btn{
+  margin:10px
+}
 .list-group-item {
   cursor: pointer;
 }

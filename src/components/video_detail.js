@@ -1,7 +1,8 @@
 import React from 'react';
 import YouTube from 'react-youtube';
+import Files from "react-files";
 
-const VideoDetail = ({video,onVideoEnd}) => {
+const VideoDetail = ({video,onVideoEnd,onExportClick,fileReader}) => {
   if(!video){
     return <div>loading...</div>
   }
@@ -20,7 +21,23 @@ const VideoDetail = ({video,onVideoEnd}) => {
         <div>{video.snippet.title}</div>
         <div>{video.snippet.description}</div>
       </div>
-        <button className="btn" onClick={ () => onVideoEnd() }> Play next in queue </button>
+      <div class="video-buttons">
+        <button className="btn col-md-3" onClick={ () => onVideoEnd() }> Play next in queue </button>
+        <a className="btn btn-primary col-md-3" id="link" download="queue.json" onClick={ () => onExportClick() }> Export queue </a>
+        <div className="files btn btn-warning col-md-3">
+          <Files
+            className="files-dropzone"
+            onChange={file => {
+              fileReader.readAsText(file[0]);
+            }}
+            onError={err => console.log(err)}
+            accepts={[".json"]}
+            multiple={false}
+            clickable >
+            Import queue
+          </Files>
+        </div>
+      </div>
     </div>
   )
 };

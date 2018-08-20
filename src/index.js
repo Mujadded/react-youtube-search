@@ -15,10 +15,22 @@ class App extends Component {
         this.state = { 
             videos: [],
             selectedVideo: null,
-            queuedVideos: []
+            queuedVideos: [],
+            fileReader: new FileReader()
          };
+        
+        this.state.fileReader.onload = event => {this.onImport(event)};
 
-         this.videoSearch('');
+        this.videoSearch('');
+    }
+
+    onImport(event) {
+        let videos = JSON.parse(event.target.result.replace(/#/g, " "))
+        console.log(videos);
+        this.setState({ 
+            queuedVideos: videos,
+            selectedVideo: videos[0]
+        });
     }
 
     videoSearch(term) {
@@ -57,6 +69,11 @@ class App extends Component {
         })
     }
 
+    exportCurrentQueue(){
+        const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(this.state.queuedVideos).replace(/\s/g, "#")}`
+        document.getElementById('link').href = dataUri
+    }
+
    render(){ 
        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
        
@@ -67,6 +84,8 @@ class App extends Component {
                 selectedVideo = {this.state.selectedVideo}
                 queuedVideos = {this.state.queuedVideos} />
             <VideoDetail
+                fileReader = {this.state.fileReader}
+                onExportClick={() => this.exportCurrentQueue()}
                 onVideoEnd={() => this.nextInQueue() }
                 video={this.state.selectedVideo}/>
             <VideoList
