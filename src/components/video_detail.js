@@ -23,7 +23,7 @@ const VideoDetail = ({video,onVideoEnd,onExportClick,fileReader}) => {
       </div>
       <div class="video-buttons">
         <button className="btn col-md-3" onClick={ () => onVideoEnd() }> Play next in queue </button>
-        <a className="btn btn-primary col-md-3" id="link" download="queue.json" onClick={ () => onExportClick() }> Export queue </a>
+        <a className="btn btn-primary col-md-3" id="link" download="queue.json" onClick={ () => onExportClick() }> Save/Share queue </a>
         <div className="files btn btn-warning col-md-3">
           <Files
             className="files-dropzone"
@@ -34,7 +34,7 @@ const VideoDetail = ({video,onVideoEnd,onExportClick,fileReader}) => {
             accepts={[".json"]}
             multiple={false}
             clickable >
-            Import queue
+            Upload saved queue
           </Files>
         </div>
       </div>
