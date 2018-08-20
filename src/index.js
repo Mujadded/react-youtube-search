@@ -13,10 +13,11 @@ class App extends Component {
 
         this.state = { 
             videos: [],
-            selectedVideo: null
+            selectedVideo: null,
+            queuedVideos: []
          };
 
-         this.videoSearch('best amv');
+         this.videoSearch('');
     }
 
     videoSearch(term) {
@@ -34,13 +35,38 @@ class App extends Component {
         });
     }
 
+    addVideoinQueue(video){
+        let queue = this.state.queuedVideos;
+        queue.indexOf(video) === -1 ? queue.push(video) : console.log("This item already exists");
+        this.setState({ queuedVideos: queue });
+    }
+
+    nextInQueue() {
+        let video = this.state.queuedVideos.shift();
+        if(video){
+            this.setState({ selectedVideo: video });
+        }
+    }
+
    render(){ 
        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
+       const queue = this.state.queuedVideos.map((video) => {
+            return <li className="" >{video.snippet.title}</li>
+        });
        return (
         <div>
             <SearchBar onSearchTermChange = {videoSearch} />
-            <VideoDetail video={this.state.selectedVideo}/>
+            <div className="queue col-md-2">
+                Next Songs in Queue
+                <ol className="">
+                {queue}
+                </ol>
+            </div>
+            <VideoDetail
+                onVideoEnd={() => this.nextInQueue() }
+                video={this.state.selectedVideo}/>
             <VideoList
+                onClickAddVideo={ clickedVideo => this.addVideoinQueue(clickedVideo) }
                 onVideoSelect={selectedVideo => this.setState({selectedVideo})} 
                 videos={ this.state.videos }
             />
@@ -49,4 +75,4 @@ class App extends Component {
     }
 }
 
-ReactDOM.render(<App />, document.querySelector('.container'));
+ReactDOM.render(<App />, document.querySelector('.container-fluid'));
