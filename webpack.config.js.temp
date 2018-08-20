@@ -1,5 +1,5 @@
-var port = process.env.PORT || 80;
-var host = process.env.IP || '0.0.0.0';
+var port = process.env.PORT || 8080;
+var host = process.env.IP || '127.0.0.1';
 
 module.exports = {
   entry: ['./src/index.js'],
