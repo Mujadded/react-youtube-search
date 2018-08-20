@@ -29,14 +29,15 @@ div.addQueue {
 
 .queue {
   border: 1px solid #ddd;
-  margin-top: 10px;
   text-align: center;
   font-weight: bold;
   border-radius: 10px;
 }
-.queue li {
-  padding: 2px;
-  font-size: 12px;
+.queue__header{
+  padding: 10px;
+}
+.queue .queue-list {
+  font-size: 13px;
   font-style: italic;
 }
 

@@ -19,8 +19,8 @@ const videoDetail = ({video,onVideoEnd}) => {
       <div className="details">
         <div>{video.snippet.title}</div>
         <div>{video.snippet.description}</div>
-        <button className="btn btn-warning" onClick={ () => onVideoEnd() }>next</button>
       </div>
+        <button className="btn" onClick={ () => onVideoEnd() }> Play next in queue </button>
     </div>
   )
 };

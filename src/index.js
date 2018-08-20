@@ -25,7 +25,8 @@ class App extends Component {
             if (!this.state.selectedVideo){
                 this.setState({ 
                     videos: videos,
-                    selectedVideo: videos[0] 
+                    selectedVideo: videos[0],
+                    queuedVideos: [videos[0]]
                 });
             }
             else {
@@ -42,32 +43,48 @@ class App extends Component {
     }
 
     nextInQueue() {
-        let video = this.state.queuedVideos.shift();
-        if(video){
-            this.setState({ selectedVideo: video });
+        this.state.queuedVideos.shift();
+        if(this.state.queuedVideos.length > 0){
+            this.setState({ selectedVideo: this.state.queuedVideos[0] });
         }
+    }
+    
+    playVideo(video){
+        this.setState({
+            selectedVideo: video,
+            queuedVideos:[video],
+        })
     }
 
    render(){ 
        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
-       const queue = this.state.queuedVideos.map((video) => {
-            return <li className="" >{video.snippet.title}</li>
+       var queue = this.state.queuedVideos.map((video) => {
+           let className = "";
+           if(video == this.state.selectedVideo)
+            {
+                className = "alert alert-success";
+            }
+            else
+            {
+                className ="alert alert-info"
+            }
+            return <div className={className}>{video.snippet.title}</div>
         });
        return (
         <div>
             <SearchBar onSearchTermChange = {videoSearch} />
             <div className="queue col-md-2">
-                Next Songs in Queue
-                <ol className="">
+                <div className="queue__header">Next Songs in Queue</div>
+                <div className=" queue-list">
                 {queue}
-                </ol>
+                </div>
             </div>
             <VideoDetail
                 onVideoEnd={() => this.nextInQueue() }
                 video={this.state.selectedVideo}/>
             <VideoList
                 onClickAddVideo={ clickedVideo => this.addVideoinQueue(clickedVideo) }
-                onVideoSelect={selectedVideo => this.setState({selectedVideo})} 
+                onVideoSelect={selectedVideo => this.playVideo(selectedVideo)} 
                 videos={ this.state.videos }
             />
         </div>
