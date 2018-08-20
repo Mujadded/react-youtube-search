@@ -1,7 +1,7 @@
 import React from 'react';
 import YouTube from 'react-youtube';
 
-const videoDetail = ({video,onVideoEnd}) => {
+const VideoDetail = ({video,onVideoEnd}) => {
   if(!video){
     return <div>loading...</div>
   }
@@ -25,4 +25,4 @@ const videoDetail = ({video,onVideoEnd}) => {
   )
 };
 
-export default videoDetail;
+export default VideoDetail;

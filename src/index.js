@@ -5,6 +5,7 @@ import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
+import QueueList from './components/queue_list';
 const API_KEY = 'AIzaSyDzrD_k4pgLe2SITQiC0RHYg9CD2w6DcT0'
 
 class App extends Component {
@@ -58,27 +59,13 @@ class App extends Component {
 
    render(){ 
        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
-       var queue = this.state.queuedVideos.map((video) => {
-           let className = "";
-           if(video == this.state.selectedVideo)
-            {
-                className = "alert alert-success";
-            }
-            else
-            {
-                className ="alert alert-info"
-            }
-            return <div className={className}>{video.snippet.title}</div>
-        });
+       
        return (
         <div>
             <SearchBar onSearchTermChange = {videoSearch} />
-            <div className="queue col-md-2">
-                <div className="queue__header">Next Songs in Queue</div>
-                <div className=" queue-list">
-                {queue}
-                </div>
-            </div>
+            <QueueList 
+                selectedVideo = {this.state.selectedVideo}
+                queuedVideos = {this.state.queuedVideos} />
             <VideoDetail
                 onVideoEnd={() => this.nextInQueue() }
                 video={this.state.selectedVideo}/>
