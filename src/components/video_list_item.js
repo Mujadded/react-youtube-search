@@ -10,7 +10,7 @@ const VideoListItem = ({video, onVideoSelect, onClickAddVideo}) => {
             <img className="media-object" src={imageUrl} />
           </div>
 
-          <div className="media-body">
+          <div className="media-body hidden-md-down">
             <div className="media-heading">{video.snippet.title}</div>
           </div>
         </div>
