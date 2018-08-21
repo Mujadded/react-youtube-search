@@ -27,6 +27,13 @@ class App extends Component {
 
     onImport(event) {
         let videos = JSON.parse(event.target.result.replace(/{#}/g, " "))
+        videos = videos.filter((video)=>{
+            if(video)
+            {
+                return true;
+            }
+            return false;
+        })
         console.log(videos);
         this.setState({ 
             queuedVideos: videos,
@@ -52,8 +59,10 @@ class App extends Component {
 
     addVideoinQueue(video){
         let queue = this.state.queuedVideos;
-        queue.indexOf(video) === -1 ? queue.push(video) : console.log("This item already exists");
-        this.setState({ queuedVideos: queue });
+        if(video){
+            queue.indexOf(video) === -1 ? queue.push(video) : console.log("This item already exists"); 
+            this.setState({ queuedVideos: queue });
+        }
     }
 
     nextInQueue() {
