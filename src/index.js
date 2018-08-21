@@ -69,11 +69,23 @@ class App extends Component {
 
     }
     
-    playVideo(video){
-        this.setState({
-            selectedVideo: video,
-            queuedVideos:[video],
-        })
+    playVideo(video, fromQueue = false){
+        if (fromQueue) {
+            console.log('here');
+            let queue = this.state.queuedVideos;    
+            let index_of_video = queue.indexOf(video);
+            [queue[0], queue[index_of_video]] = [queue[index_of_video], queue[0]];
+            this.setState({
+                selectedVideo: queue[0],
+                queuedVideos: queue
+            });
+        }
+        else {  
+            this.setState({
+                selectedVideo: video,
+                queuedVideos:[video],
+            });
+        }
     }
 
     exportCurrentQueue(){
@@ -106,6 +118,7 @@ class App extends Component {
         <div>
             <SearchBar onSearchTermChange = {videoSearch} />
             <QueueList 
+                onVideoSelect={selectedVideo => this.playVideo(selectedVideo,true)}
                 repeatQueue = {this.state.repeatQueue}
                 onRepeatClick = {() => this.turnOnRepeat() }
                 onShuffleClick = {() => this.shuffleQueue() }

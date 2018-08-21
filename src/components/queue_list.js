@@ -1,9 +1,9 @@
 import React from 'react';
 
-const QueueList = ({queuedVideos, selectedVideo, onRepeatClick, repeatQueue, onShuffleClick}) =>{
+const QueueList = ({onVideoSelect, queuedVideos, selectedVideo, onRepeatClick, repeatQueue, onShuffleClick}) =>{
     var queue = queuedVideos.map((video) => {
            let className = video == selectedVideo ? "alert alert-success" : "alert alert-info" ;
-            return <div className={className}>{video.snippet.title}</div>
+            return <div className={className} onClick={()=> {onVideoSelect(video)}}>{video.snippet.title}</div>
         });
     return (<div className="queue col-lg-2">
                 <div className="queue__header">

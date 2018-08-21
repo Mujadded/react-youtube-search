@@ -52,6 +52,10 @@ i.active,i:hover{
   font-size: 13px;
   font-style: italic;
 }
+.queue-list div:hover{
+  background-color: #dff0d8;
+  border-color: #d0e9c6;
+}
 .video-buttons .btn{
   margin:10px
 }
