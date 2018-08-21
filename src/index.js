@@ -93,9 +93,9 @@ class App extends Component {
         document.getElementById('link').href = dataUri
     }
 
-    turnOnRepeat(){
+    toggleRepeat(){
         this.setState({
-            repeatQueue: true
+            repeatQueue: !this.state.repeatQueue
         })
     }
 
@@ -120,7 +120,7 @@ class App extends Component {
             <QueueList 
                 onVideoSelect={selectedVideo => this.playVideo(selectedVideo,true)}
                 repeatQueue = {this.state.repeatQueue}
-                onRepeatClick = {() => this.turnOnRepeat() }
+                onRepeatClick = {() => this.toggleRepeat() }
                 onShuffleClick = {() => this.shuffleQueue() }
                 selectedVideo = {this.state.selectedVideo}
                 queuedVideos = {this.state.queuedVideos} />
