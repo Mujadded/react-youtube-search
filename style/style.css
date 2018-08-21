@@ -34,8 +34,19 @@ div.addQueue {
   border-radius: 10px;
 }
 .queue__header{
-  padding: 10px;
+  padding-top: 10px;
+  height: 40px;
+  font-size: 13px;
 }
+i {
+  padding:1px;
+  border-radius: 10px;
+}
+i.active,i:hover{
+  background-color: lightslategray;
+  color: white;
+}
+
 .queue .queue-list {
   font-size: 13px;
   font-style: italic;

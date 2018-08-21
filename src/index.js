@@ -16,6 +16,7 @@ class App extends Component {
             videos: [],
             selectedVideo: null,
             queuedVideos: [],
+            repeatQueue: false,
             fileReader: new FileReader()
          };
         
@@ -56,10 +57,16 @@ class App extends Component {
     }
 
     nextInQueue() {
-        this.state.queuedVideos.shift();
+        let video = this.state.queuedVideos.shift();
+        if(this.state.repeatQueue){
+            let queue = this.state.queuedVideos;
+            queue.push(video)
+            this.setState({queuedVideos: queue})
+        }
         if(this.state.queuedVideos.length > 0){
             this.setState({ selectedVideo: this.state.queuedVideos[0] });
         }
+
     }
     
     playVideo(video){
@@ -74,6 +81,24 @@ class App extends Component {
         document.getElementById('link').href = dataUri
     }
 
+    turnOnRepeat(){
+        this.setState({
+            repeatQueue: true
+        })
+    }
+
+    shuffleQueue(){
+        let queue = this.state.queuedVideos;
+        for (let i = queue.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [queue[i], queue[j]] = [queue[j], queue[i]];
+        }
+        this.setState({
+            queuedVideos: queue,
+            selectedVideo:queue[0]
+        });
+    }
+
    render(){ 
        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
        
@@ -81,6 +106,9 @@ class App extends Component {
         <div>
             <SearchBar onSearchTermChange = {videoSearch} />
             <QueueList 
+                repeatQueue = {this.state.repeatQueue}
+                onRepeatClick = {() => this.turnOnRepeat() }
+                onShuffleClick = {() => this.shuffleQueue() }
                 selectedVideo = {this.state.selectedVideo}
                 queuedVideos = {this.state.queuedVideos} />
             <VideoDetail
