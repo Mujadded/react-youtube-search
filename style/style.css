@@ -40,14 +40,18 @@ div.addQueue {
   display: inline-block;
 }
 i {
-  padding:1px;
+  padding:3px;
   border-radius: 10px;
 }
-i.active,i:hover{
+i:hover{
   background-color: lightslategray;
   color: white;
 }
-
+i.active
+{
+  background-color: grey;
+  color: greenyellow;
+}
 .queue .queue-list {
   font-size: 13px;
   font-style: italic;
