@@ -37,6 +37,7 @@ div.addQueue {
   padding-top: 10px;
   height: 40px;
   font-size: 13px;
+  display: inline-block;
 }
 i {
   padding:1px;

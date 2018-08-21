@@ -5,7 +5,7 @@ const QueueList = ({queuedVideos, selectedVideo, onRepeatClick, repeatQueue, onS
            let className = video == selectedVideo ? "alert alert-success" : "alert alert-info" ;
             return <div className={className}>{video.snippet.title}</div>
         });
-    return (<div className="queue col-md-2">
+    return (<div className="queue col-lg-2">
                 <div className="queue__header">
                     <div className="col-sm-2">
                         <i className={repeatQueue? "fas fa-redo-alt active" : "fas fa-redo-alt" } onClick={() => onRepeatClick() }></i>
