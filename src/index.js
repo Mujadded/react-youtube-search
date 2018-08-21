@@ -26,7 +26,7 @@ class App extends Component {
     }
 
     onImport(event) {
-        let videos = JSON.parse(event.target.result.replace(/#/g, " "))
+        let videos = JSON.parse(event.target.result.replace(/{#}/g, " "))
         console.log(videos);
         this.setState({ 
             queuedVideos: videos,
@@ -71,7 +71,6 @@ class App extends Component {
     
     playVideo(video, fromQueue = false){
         if (fromQueue) {
-            console.log('here');
             let queue = this.state.queuedVideos;
             delete queue[queue.indexOf(video)];
             queue.unshift(video);
@@ -89,7 +88,7 @@ class App extends Component {
     }
 
     exportCurrentQueue(){
-        const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(this.state.queuedVideos).replace(/\s/g, "#")}`
+        const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(this.state.queuedVideos).replace(/\s/g, "{#}")}`
         document.getElementById('link').href = dataUri
     }
 
