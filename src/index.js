@@ -72,9 +72,9 @@ class App extends Component {
     playVideo(video, fromQueue = false){
         if (fromQueue) {
             console.log('here');
-            let queue = this.state.queuedVideos;    
-            let index_of_video = queue.indexOf(video);
-            [queue[0], queue[index_of_video]] = [queue[index_of_video], queue[0]];
+            let queue = this.state.queuedVideos;
+            delete queue[queue.indexOf(video)];
+            queue.unshift(video);
             this.setState({
                 selectedVideo: queue[0],
                 queuedVideos: queue
