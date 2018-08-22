@@ -132,6 +132,15 @@ class App extends Component {
         return videos;
     }
 
+    deleteUndefinedVideos(){
+        let queue = this.state.queuedVideos;
+        queue = this.cleanQueue(queue);
+        this.setState({ 
+            queuedVideos: queue,
+            selectedVideo: queue[0]
+        });
+    }
+
    render(){ 
        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
        
@@ -139,6 +148,7 @@ class App extends Component {
         <div>
             <SearchBar onSearchTermChange = {videoSearch} />
             <QueueList 
+                deleteUndefinedVideos = { ()=> this.deleteUndefinedVideos() }
                 onVideoSelect={selectedVideo => this.playVideo(selectedVideo,true)}
                 repeatQueue = {this.state.repeatQueue}
                 onRepeatClick = {() => this.toggleRepeat() }

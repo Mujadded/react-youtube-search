@@ -1,9 +1,10 @@
 import React from 'react';
 
-const QueueList = ({onVideoSelect, queuedVideos, selectedVideo, onRepeatClick, repeatQueue, onShuffleClick}) =>{
+const QueueList = ({deleteUndefinedVideos, onVideoSelect, queuedVideos, selectedVideo, onRepeatClick, repeatQueue, onShuffleClick}) =>{
     var queue = queuedVideos.map((video) => {
         if (!video) {
-            console.log("got an Error");
+            console.log(queuedVideos);
+            deleteUndefinedVideos();
             return;
         }
         let className = video == selectedVideo ? "alert alert-success" : "alert alert-info" ;
