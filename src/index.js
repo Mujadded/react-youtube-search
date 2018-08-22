@@ -27,14 +27,7 @@ class App extends Component {
 
     onImport(event) {
         let videos = JSON.parse(event.target.result.replace(/{#}/g, " "))
-        videos = videos.filter((video)=>{
-            if(video)
-            {
-                return true;
-            }
-            return false;
-        })
-        console.log(videos);
+        videos = this.cleanQueue(videos);
         this.setState({ 
             queuedVideos: videos,
             selectedVideo: videos[0]
@@ -60,20 +53,32 @@ class App extends Component {
     addVideoinQueue(video){
         let queue = this.state.queuedVideos;
         if(video){
-            queue.indexOf(video) === -1 ? queue.push(video) : console.log("This item already exists"); 
-            this.setState({ queuedVideos: queue });
+            let exists = false;
+            _.forEach(queue,(currentVideo)=>{
+                if (currentVideo.etag == video.etag){
+                    exists = true;
+                    return;
+                }
+            });
+            console.log("Already in queue");
+            if(!exists){
+                queue.push(video) 
+                this.setState({ queuedVideos: queue });
+            }
         }
     }
 
     nextInQueue() {
         let video = this.state.queuedVideos.shift();
+        let queue = this.state.queuedVideos;
         if(this.state.repeatQueue){
-            let queue = this.state.queuedVideos;
-            queue.push(video)
-            this.setState({queuedVideos: queue})
+            queue.push(video);
         }
         if(this.state.queuedVideos.length > 0){
-            this.setState({ selectedVideo: this.state.queuedVideos[0] });
+            this.setState({ 
+                selectedVideo: queue[0],
+                queuedVideos: queue 
+            });
         }
 
     }
@@ -91,32 +96,40 @@ class App extends Component {
         else {  
             this.setState({
                 selectedVideo: video,
-                queuedVideos:[video],
+                queuedVideos:[video]
             });
         }
     }
 
     exportCurrentQueue(){
-        const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(this.state.queuedVideos).replace(/\s/g, "{#}")}`
-        document.getElementById('link').href = dataUri
+        const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(this.state.queuedVideos).replace(/\s/g, "{#}")}`;
+        document.getElementById('link').href = dataUri;
     }
 
     toggleRepeat(){
         this.setState({
             repeatQueue: !this.state.repeatQueue
-        })
+        });
     }
 
     shuffleQueue(){
         let queue = this.state.queuedVideos;
-        for (let i = queue.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [queue[i], queue[j]] = [queue[j], queue[i]];
-        }
+        queue=_.shuffle(queue)
         this.setState({
             queuedVideos: queue,
             selectedVideo:queue[0]
         });
+    }
+
+    cleanQueue(videos){
+        videos = videos.filter((video)=>{
+            if(video)
+            {
+                return true;
+            }
+            return false;
+        });
+        return videos;
     }
 
    render(){ 
@@ -131,7 +144,8 @@ class App extends Component {
                 onRepeatClick = {() => this.toggleRepeat() }
                 onShuffleClick = {() => this.shuffleQueue() }
                 selectedVideo = {this.state.selectedVideo}
-                queuedVideos = {this.state.queuedVideos} />
+                queuedVideos = {this.state.queuedVideos} 
+                />
             <VideoDetail
                 fileReader = {this.state.fileReader}
                 onExportClick={() => this.exportCurrentQueue()}

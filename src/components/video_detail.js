@@ -15,7 +15,12 @@ const VideoDetail = ({video,onVideoEnd,onExportClick,fileReader}) => {
   return (
     <div className="video-detail col-sm-7">
       <div className="embed-responsive embed-responsive-16by9">
-        <YouTube videoId={videoId} opts={opts} onEnd={() => onVideoEnd()}/>
+        <YouTube 
+          videoId={videoId} 
+          opts={opts} 
+          onEnd={() => onVideoEnd()}
+          onError={() => onVideoEnd()}
+          />
       </div>
       <div className="details">
         <div>{video.snippet.title}</div>
