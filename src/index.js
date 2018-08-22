@@ -69,12 +69,12 @@ class App extends Component {
     }
 
     nextInQueue() {
-        let video = this.state.queuedVideos.shift();
         let queue = this.state.queuedVideos;
+        let video = queue.shift();
         if(this.state.repeatQueue){
             queue.push(video);
         }
-        if(this.state.queuedVideos.length > 0){
+        if(queue.length > 0){
             this.setState({ 
                 selectedVideo: queue[0],
                 queuedVideos: queue 
