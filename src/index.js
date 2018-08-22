@@ -101,7 +101,7 @@ class App extends Component {
     }
 
     exportCurrentQueue(){
-        queue = this.state.queuedVideos;
+        let queue = this.state.queuedVideos;
         const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(queue).replace(/\s/g, "{#}")}`;
         document.getElementById('link').href = dataUri;
     }
