@@ -2,7 +2,8 @@ import React from 'react';
 
 const QueueList = ({onVideoSelect, queuedVideos, selectedVideo, onRepeatClick, repeatQueue, onShuffleClick}) =>{
     var queue = queuedVideos.map((video) => {
-        if (!video) { 
+        if (!video) {
+            console.log("got an Error");
             return;
         }
         let className = video == selectedVideo ? "alert alert-success" : "alert alert-info" ;
