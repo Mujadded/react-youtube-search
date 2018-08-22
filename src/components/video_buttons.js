@@ -1,10 +1,10 @@
 import React from 'react';
 import Files from "react-files";
 
-const VideoButtons = ({onNextClick, onExportClick, fileReader}) => {
+const VideoButtons = ({nextInQueue, onExportClick, fileReader}) => {
   return (
     <div className="video-buttons">
-        <button className="btn" onClick={ () => onNextClick() }> Play next in queue </button>
+        <button className="btn" onClick={ () => nextInQueue() }> Play next in queue </button>
         <a className="btn btn-primary" id="link" download="queue.json" onClick={ () => onExportClick() }> Save queue </a>
         <div className="files btn btn-warning">
           <Files

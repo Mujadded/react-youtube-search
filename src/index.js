@@ -71,7 +71,8 @@ class App extends Component {
     nextInQueue() {
         let queue = this.state.queuedVideos;
         let video = queue.shift();
-        if(this.state.repeatQueue){
+        const repeat = this.state.repeatQueue;
+        if(repeat && video){
             queue.push(video);
         }
         if(queue.length > 0){
@@ -83,11 +84,11 @@ class App extends Component {
 
     }
     
-    playVideo(video, fromQueue = false){
-        let selectedVideo = null;        
+    playVideo(video, fromQueue = false){     
         let queue = this.state.queuedVideos;
         if (fromQueue) {
             delete queue[queue.indexOf(video)];
+            queue=this.cleanQueue(queue);
             queue.unshift(video);
         }
         else { 
@@ -114,6 +115,7 @@ class App extends Component {
     shuffleQueue(){
         let queue = this.state.queuedVideos;
         queue=_.shuffle(queue)
+        queue = this.cleanQueue(queue);
         this.setState({
             queuedVideos: queue,
             selectedVideo:queue[0]
@@ -131,15 +133,6 @@ class App extends Component {
         return videos;
     }
 
-    deleteUndefinedVideos(){
-        let queue = this.state.queuedVideos;
-        queue = this.cleanQueue(queue);
-        this.setState({ 
-            queuedVideos: queue,
-            selectedVideo: queue[0]
-        });
-    }
-
    render(){ 
        const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
        
@@ -147,7 +140,6 @@ class App extends Component {
         <div>
             <SearchBar onSearchTermChange = {videoSearch} />
             <QueueList 
-                deleteUndefinedVideos = { ()=> this.deleteUndefinedVideos() }
                 onVideoSelect={selectedVideo => this.playVideo(selectedVideo,true)}
                 repeatQueue = {this.state.repeatQueue}
                 onRepeatClick = {() => this.toggleRepeat() }
@@ -156,9 +148,10 @@ class App extends Component {
                 queuedVideos = {this.state.queuedVideos} 
                 />
             <VideoDetail
+                queuedVideos= {this.state.queuedVideos}
                 fileReader = {this.state.fileReader}
                 onExportClick={() => this.exportCurrentQueue()}
-                onVideoEnd={() => this.nextInQueue() }
+                nextInQueue={() => this.nextInQueue() }
                 video={this.state.selectedVideo}/>
             <VideoList
                 onClickAddVideo={ clickedVideo => this.addVideoinQueue(clickedVideo) }

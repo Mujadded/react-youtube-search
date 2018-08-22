@@ -2,7 +2,7 @@ import React from 'react';
 import YouTube from 'react-youtube';
 import VideoButtons from './video_buttons';
 
-const VideoDetail = ({video,onVideoEnd,onExportClick,fileReader}) => {
+const VideoDetail = ({video,nextInQueue,onExportClick,fileReader}) => {
   if(!video){
     return <div>loading...</div>
   }
@@ -18,8 +18,8 @@ const VideoDetail = ({video,onVideoEnd,onExportClick,fileReader}) => {
         <YouTube 
           videoId={videoId} 
           opts={opts} 
-          onEnd={() => onVideoEnd()}
-          onError={() => onVideoEnd()}
+          onEnd={() => nextInQueue()}
+          onError={() => console.log('on error while playing')}
           />
       </div>
       <div className="details">
@@ -27,8 +27,8 @@ const VideoDetail = ({video,onVideoEnd,onExportClick,fileReader}) => {
         <div>{video.snippet.description}</div>
       </div>
       <VideoButtons 
-        onNextClick = { onVideoEnd }
-        onExportClick = { onExportClick }
+        nextInQueue = {() => nextInQueue() }
+        onExportClick = { () => onExportClick() }
         fileReader = { fileReader }
       />
     </div>
