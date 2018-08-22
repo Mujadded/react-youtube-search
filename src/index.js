@@ -84,25 +84,24 @@ class App extends Component {
     }
     
     playVideo(video, fromQueue = false){
+        let selectedVideo = null;        
+        let queue = this.state.queuedVideos;
         if (fromQueue) {
-            let queue = this.state.queuedVideos;
             delete queue[queue.indexOf(video)];
             queue.unshift(video);
-            this.setState({
-                selectedVideo: queue[0],
-                queuedVideos: queue
-            });
         }
-        else {  
-            this.setState({
-                selectedVideo: video,
-                queuedVideos:[video]
-            });
+        else { 
+            queue = [video];
         }
+        this.setState({
+            selectedVideo: queue[0],
+            queuedVideos: queue
+        });
     }
 
     exportCurrentQueue(){
-        const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(this.state.queuedVideos).replace(/\s/g, "{#}")}`;
+        queue = this.state.queuedVideos;
+        const dataUri = `data:application/json;charset=utf-8,${JSON.stringify(queue).replace(/\s/g, "{#}")}`;
         document.getElementById('link').href = dataUri;
     }
 
