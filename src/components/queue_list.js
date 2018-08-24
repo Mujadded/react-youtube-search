@@ -21,7 +21,7 @@ const QueueList = ({onVideoSelect, queuedVideos, selectedVideo, onRepeatClick, r
                         <i className="fas fa-random"  onClick={() => onShuffleClick() } ></i>
                     </div>
                 </div>
-                <div className=" queue-list">
+                <div className="queue-list">
                 {queue}
                 </div>
             </div>);
