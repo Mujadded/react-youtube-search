@@ -12,12 +12,10 @@ const VideoList = (props) => {
         );
     });
     return (
-        <div className="col-sm-3 video-list-box">
-            <ul className="list-group">
-                {videoItems}
-            </ul>
-        </div>
-    )
+        <ul className="col-sm-3 list-group video-list-box">
+            {videoItems}
+        </ul>
+    );
 };
 
 export default VideoList;
