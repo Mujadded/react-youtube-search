@@ -16,7 +16,7 @@ const QueueList = ({onVideoSelect, queuedVideos, selectedVideo, onRepeatClick, r
                     <div className="col-md-2 col-xs-5">
                         <i className={repeatQueue? "fas fa-redo-alt active" : "fas fa-redo-alt" } onClick={() => onRepeatClick() }></i>
                     </div>                   
-                    <div className="col-md-7 hidden-md-down queue_title">Song Queue</div>
+                    <div className="col-md-7 hidden-md-down queue_title">Play Queue</div>
                     <div className="col-md-2 col-xs-5">
                         <i className="fas fa-random"  onClick={() => onShuffleClick() } ></i>
                     </div>
