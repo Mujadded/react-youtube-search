@@ -93,6 +93,10 @@ ul.video-list-box{
   padding-right:0;
   height:520px;
   overflow-y:scroll;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;  
 }
 
 .video-list-box::-webkit-scrollbar-track
