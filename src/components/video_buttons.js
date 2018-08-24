@@ -16,7 +16,7 @@ const VideoButtons = ({nextInQueue, onExportClick, fileReader}) => {
             accepts={[".json"]}
             multiple={false}
             clickable >
-              Click to Upload queue or drop your file over this button
+              Click to Upload queue or Drop file here
           </Files>
         </div>
       </div>
